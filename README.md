@@ -65,3 +65,16 @@ spec:
     weight: 100
   wildcardPolicy: None
 ```
+
+## Exercice bonus sur les PV
+
+En reprenant l'exercice précédent, enlevez la configmap pour la remplacer par un PV NFS monté dans le même emplacement. 
+
+La configuration du volume NFS est la suivante : 
+
+192.168.1.56
+/Volume1/public/nfs-share-openshift/project-gp-x
+
+Vérifiez que la configuration est persistente.
+
+Mettez le deployment à 2 et vérifierz le bon fonctionnement de votre volume NFS
