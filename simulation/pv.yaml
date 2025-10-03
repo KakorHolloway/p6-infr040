@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: debug-correction
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  nfs:
+    path: /Volume1/public/nfs-share-openshift/correction
+    server: 192.168.1.56
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-debug
+  namespace: correction
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: nfs
+  volumeMode: Filesystem
+  volumeName: debug-correction
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+      - mountPath: "/debug"
+        name: mypd
+      securityContext:
+        allowPrivilegeEscalation: true
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: pvc-debug

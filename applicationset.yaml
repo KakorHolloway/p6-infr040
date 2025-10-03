@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ipi-gp-applicationset
+spec:
+  generators:
+  - list:
+      elements:
+      - name: ipi-gp-1
+        namespace: project-gp-1
+        valuesFile: values-tp-1.yaml
+      - name: ipi-gp-2
+        namespace: project-gp-2
+        valuesFile: values-tp-2.yaml
+      - name: ipi-gp-3
+        namespace: project-gp-3
+        valuesFile: values-tp-3.yaml
+      - name: ipi-gp-4
+        namespace: project-gp-4
+        valuesFile: values-tp-4.yaml
+      - name: ipi-gp-5
+        namespace: project-gp-5
+        valuesFile: values-tp-5.yaml
+      - name: ipi-gp-6
+        namespace: project-gp-6
+        valuesFile: values-tp-6.yaml
+      - name: ipi-gp-7
+        namespace: project-gp-7
+        valuesFile: values-tp-7.yaml
+      - name: ipi-gp-8
+        namespace: project-gp-8
+        valuesFile: values-tp-8.yaml
+      - name: ipi-gp-9
+        namespace: project-gp-9
+        valuesFile: values-tp-9.yaml
+      - name: correction
+        namespace: correction
+        valuesFile: correction.yaml
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://gitlab.kakor.ovh/gitlab-instance-0cc29474/bookstack.git
+        targetRevision: HEAD
+        path: helm
+        helm:
+          valueFiles:
+          - '{{valuesFile}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
