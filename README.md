@@ -29,3 +29,39 @@ Une fois authentifié (attention à ne pas recharger la page même si l'affichag
 Cliquez sur le lien Display Token et copiez dans votre terminal sur VScode la ligne de commande qui à été donné avec oc. 
 
 Pour vérifier que vous êtes authentifiés, lancez la commande ```oc get pod```
+
+Afin de vous mettre dans le contexte du namespace qui sera provisionné sous le nom ipi-gp-x, vous pouvez lancer la commande :
+
+```oc project ipi-gp-x```
+
+
+# EXERCICE DE REMISE EN FORME 
+
+Créez un deployment d'un seul conteneur dans le namespace de votre groupe (ex dans la doc https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+
+Ce deployment utilisera l'image publique : harbor.kakor.ovh/public/nginx:latest
+
+Créez une configmap qui contiendra un fiochier index.html, monté sur le deployment pour afficher le texte de votre choix.
+
+Créez un service lié à ce pod sur le port 80.
+
+Créez la route openshift via le template suivant :
+
+```
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: <nomdevotreapp>
+spec:
+  host: app-gp-x.apps.openshift.kakor.ovh
+  port:
+    targetPort: <port de votre service>
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: <nomduservice>
+    weight: 100
+  wildcardPolicy: None
+```
