@@ -57,8 +57,8 @@ spec:
   port:
     targetPort: <port de votre service>
   tls:
-    insecureEdgeTerminationPolicy: Redirect
-    termination: reencrypt
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
   to:
     kind: Service
     name: <nomduservice>
