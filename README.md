@@ -32,7 +32,7 @@ Pour vérifier que vous êtes authentifiés, lancez la commande ```oc get pod```
 
 Afin de vous mettre dans le contexte du namespace qui sera provisionné sous le nom ipi-gp-x, vous pouvez lancer la commande :
 
-```oc project ipi-gp-x```
+```oc project project-gp-x```
 
 
 # EXERCICE DE REMISE EN FORME 
